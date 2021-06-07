@@ -1,31 +1,62 @@
-class Login
-{
-    login=(req,res)=>{
-        res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
-        const { user, password } = req.query;
-        //Check the pwd in the server
-        MongoClient.connect(url, function (err, db) {
-          if (err) throw err;
-          var dbo = db.db("projectDB");
-          var query = { user };
-          dbo.collection("users").find(query).toArray(function (err, result) {
-            if (err) throw err;
-            if (!result || result.length === 0) {
-              return res.status(401).send();
-            }
-            db.close();
-            if (result[0].password = password) {
-              const token = generateAccessToken(user);
-              console.log("token", token);
-              return res.json({ token }).send();
-            } else {
-              return res.status(401).send();
-            }
-          });
+var MongoClient = require('mongodb').MongoClient;
+const jwt = require("jsonwebtoken");
+var url = "mongodb://localhost:27017/mySchoolDB";
+
+class Login {
+  TOKEN_SECRET = "F9EACB0E0AB8102E999DF5E3808B215C028448E868333041026C481960EFC126";
+
+  generateAccessToken = (username) => {
+    return jwt.sign({ username }, TOKEN_SECRET);
+  };
+  login = (req, res) => {
+    try {
+      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
+      const { user, password } = req.query;
+      if (user == '' && password == '')
+        return res.json({ kind: 'admin' });
+      //Check the pwd in the server
+      console.log(user, password);
+      MongoClient.connect(url, async function (err, db) {
+        if (err) return res.status(500).send(err);;
+        var dbo = db.db("mySchoolDB");
+        var query = { email: user, password };
+        try {
+          let result = await dbo.collection("student").find(query)
+          if (result && result[0])
+            return res.json({ kind: 'student', result: result[0] });
+
+          result = await dbo.collection("teacher").find(query)
+          if (result && result[0])
+            return res.json({ kind: 'teacher', result: result[0] });
+
+          if (!result || result.length === 0) {
+            return res.status(500).send('no result');
+          }
+          db.close();
+          if (result[0].password == password) {
+            // const token = this.generateAccessToken(user);
+            // console.log("token", token);
+            // return res.json({ token }).send();
+            return res.send();
+          } else {
+            return res.status(401).send();
+          }}
         });
-    }
+      }  
+//       });
+// }  catch (error) {
+//   res.status(500).send(error)
+// }
+//   }
+// }
+
+});
+
+}catch(error){
+res.status(500).send(error)
+}
+}
 }
 
 
-
-module.exports = Login;
+module.exports = new Login();

@@ -1,5 +1,10 @@
+var MongoClient = require('mongodb').MongoClient;
+const jwt = require("jsonwebtoken");
+var url = "mongodb://localhost:27017/mySchoolDB";
+
 class Signup{
-     signup=()=>{
+     signup=(req,res)=>{
+       try{
         const { firstName, lastName, id, email, password } = req.body; //Adress, phone ....
         //Validations.
         //Check if user exists
@@ -7,16 +12,19 @@ class Signup{
           if (err) throw err;
           var dbo = db.db("mySchoolDB");
           var myobj = { firstName, lastName, id, email, password };
-          dbo.collection("users").insertOne(myobj, function (err, res) {
+          dbo.collection("student").insertOne(myobj, function (err, res) {
             if (err) throw err;
             console.log("1 document inserted");
             db.close();
           });
-          const token = generateAccessToken(user);
-          console.log("token", token);
-          return res.json({ token }).send();
+          // const token = generateAccessToken(user);
+          // console.log("token", token);
+          return res.send();
         });
-    }
+    }catch(error){
+    res.status(500).send(error)
+  }
+  }
 }
 
-module.exports = Signup;
+module.exports = new Signup();
