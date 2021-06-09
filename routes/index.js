@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const LoginController = require("../controllers/login")
 const SignupController = require("../controllers/signup")
 const PostLessonController = require("../controllers/postLesson")
-
+const PreviousLessonsController = require("../controllers/previousLessons")
 
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/mySchoolDB";
@@ -67,11 +67,8 @@ router.get("/createTeacherColection", (req, res) => {
 
 
 
-
-
-
-
 router.get("/login", LoginController.login);
+router.get("/previousLessons", PreviousLessonsController.previousLessons);
 
 router.post("/signup", SignupController.signup);
 
