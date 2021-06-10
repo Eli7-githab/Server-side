@@ -13,7 +13,7 @@ class Login {
   login = (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
     const { user, password } = req.query;
-    if (user == '' && password == '')
+    if (user == '1' && password == '1')
       return res.json({ kind: 'admin' });
     MongoClient.connect(url, async function (err, db) {
       if (err)

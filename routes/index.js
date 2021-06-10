@@ -5,6 +5,9 @@ const LoginController = require("../controllers/login")
 const SignupController = require("../controllers/signup")
 const PostLessonController = require("../controllers/postLesson")
 const PreviousLessonsController = require("../controllers/previousLessons")
+const SignupTeacherController = require("../controllers/signupTeacher")
+const AttendanceController = require("../controllers/attendance")
+
 
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/mySchoolDB";
@@ -56,7 +59,7 @@ router.get("/createTeacherColection", (req, res) => {
   MongoClient.connect(url, function (err, db) {
     if (err) return res.status(500).send(err);
     var dbo = db.db("mySchoolDB");
-    dbo.createCollection("teachers", function (err, response) {
+    dbo.createCollection("teacher", function (err, response) {
       if (err) return res.status(500).send(err);
       console.log("Collection created!");
       db.close();
@@ -65,14 +68,17 @@ router.get("/createTeacherColection", (req, res) => {
   });
 })
 
-
+router.get("/signupTeacher", SignupTeacherController.signupTeacher);
 
 router.get("/login", LoginController.login);
-router.get("/previousLessons", PreviousLessonsController.previousLessons);
+
+router.get("/s_previousLessons", PreviousLessonsController.previousLessons);
 
 router.post("/signup", SignupController.signup);
 
 router.post("/postLesson", PostLessonController.postLesson)
+
+router.post("/attendance", AttendanceController.attendance)
 
 router.get("/")
 
