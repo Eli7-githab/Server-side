@@ -16,12 +16,19 @@ class PreviousLessons {
             if (err)
                 return res.status(500).send(err);
             var dbo = db.db("mySchoolDB");
-            let result = await dbo.collection("lessons").find();
-            console.log("res_lessons", result )
-            return res.json({ result: result[0] });
+            try{
+            let resultStudent =await  dbo.collection("student").findone({student:req.params.student});
+            console.log(resultStudent);
+            let resultTeacher =await  dbo.collection("teacher").findone({subject:resultStudent.subject});
+            let result =await  dbo.collection("lessons").find({teacher:resultTeacher.email}).toArray();
+            db.close();
+            return res.status(200).json(result);
+            }catch(error){
+          return  res.status(500).json({error:error})
+        }
         });
-             db.close();
-           
+        
+
         }
         }
     

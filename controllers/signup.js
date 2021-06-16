@@ -5,13 +5,13 @@ var url = "mongodb://localhost:27017/mySchoolDB";
 class Signup {
   signup = (req, res) => {
     try {
-      const { firstName, lastName, id, email, password } = req.body; //Adress, phone ....
+      const { subject,firstName, lastName, id, email, password } = req.body; //Adress, phone ....
       //Validations.
       //Check if user exists
       MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         var dbo = db.db("mySchoolDB");
-        var myobj = { firstName, lastName, id, email, password };
+        var myobj = { subject,firstName, lastName, id, email, password };
         dbo.collection("student").insertOne(myobj, function (err, res) {
           if (err) throw err;
           console.log("1 document inserted");

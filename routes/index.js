@@ -68,11 +68,11 @@ router.get("/createTeacherColection", (req, res) => {
   });
 })
 
-router.get("/signupTeacher", SignupTeacherController.signupTeacher);
+router.post("/signupTeacher", SignupTeacherController.signupTeacher);
 
 router.get("/login", LoginController.login);
 
-router.get("/s_previousLessons", PreviousLessonsController.previousLessons);
+router.get("/s_previousLessons/:student", PreviousLessonsController.previousLessons);
 
 router.post("/signup", SignupController.signup);
 
