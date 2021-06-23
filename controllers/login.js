@@ -34,7 +34,8 @@ class Login {
         db.close();
       });
   } catch(error) {
-    throw error
+    // throw error
+    return res.status(500).json({error})
   }
 }
 }
