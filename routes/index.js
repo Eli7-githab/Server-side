@@ -7,6 +7,7 @@ const PostLessonController = require("../controllers/postLesson")
 const PreviousLessonsController = require("../controllers/previousLessons")
 const SignupTeacherController = require("../controllers/signupTeacher")
 const AttendanceController = require("../controllers/attendance")
+const TeachersController = require("../controllers/allTeachers")
 
 
 var MongoClient = require('mongodb').MongoClient;
@@ -76,8 +77,8 @@ router.get("/s_previousLessons/:student", PreviousLessonsController.previousLess
 
 router.post("/signup", SignupController.signup);
 
+router.get("/allTeachers", TeachersController.allTeachers);
 router.post("/postLesson", PostLessonController.postLesson)
-
 router.post("/attendance", AttendanceController.attendance)
 
 router.get("/")
