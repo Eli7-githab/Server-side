@@ -18,6 +18,7 @@ class PreviousLessons {
                 return res.status(500).send(err);
             var dbo = db.db("mySchoolDB");
             try{
+<<<<<<< HEAD
      debugger
      var query = { id};
      let resultStudent
@@ -28,9 +29,18 @@ class PreviousLessons {
             // let resultTeacher =await  dbo.collection("teacher").findone({subject:resultStudent.subject});
             let result =await  dbo.collection("lessons").find({subject:resultStudent.subject}).toArray();
             console.log(result);
+=======
+            // let resultStudent =await  dbo.collection("student").findone({student:req.params.student});
+            // console.log(resultStudent);
+            // let resultTeacher =await  dbo.collection("teacher").findone({subject:resultStudent.subject});
+            // let result =await  dbo.collection("lessons").find({teacher:resultTeacher.email}).toArray();
+
+
+            let result =await  dbo.collection("lessons").findOne({teacher:resultTeacher.email}).toArray();
+>>>>>>> 3e183e4b5fae872c714863dcca615c4b48f1b593
             db.close();
             return res.status(200).json(result);
-            }catch(error){
+            }catch(error){a
           return  res.status(500).json({error:error})
         }
         });
