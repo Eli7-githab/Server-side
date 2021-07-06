@@ -73,7 +73,8 @@ router.post("/signupTeacher", SignupTeacherController.signupTeacher);
 
 router.get("/login", LoginController.login);
 
-router.get("/s_previousLessons/:id", PreviousLessonsController.previousLessons);
+// router.get("/s_previousLessons/:id", PreviousLessonsController.previousLessons);
+router.get("/s_previousLessons", PreviousLessonsController.previousLessons);
 
 router.post("/signup", SignupController.signup);
 

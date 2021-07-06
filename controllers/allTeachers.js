@@ -20,8 +20,8 @@ class AllTeachers {
         
 
          //   let resultTeacher =await  dbo.collection("teacher").find({teacher:resultTeacher.subject}).toArray();
-          let resultTeacher =await  dbo.collection("teacher").find();
-            db.close();
+          let resultTeacher =await  dbo.collection("teacher").find().toArray();
+          db.close();
             return res.status(200).json(resultTeacher);
             }catch(error){a
           return  res.status(500).json({error:error})
