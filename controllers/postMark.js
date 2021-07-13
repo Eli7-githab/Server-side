@@ -2,17 +2,20 @@ var MongoClient = require('mongodb').MongoClient;
 const jwt = require("jsonwebtoken");
 var url = "mongodb://localhost:27017/mySchoolDB";
 
-class SignupTeacher {
-  signupTeacher = (req, res) => {
+class PostMark {
+    postMark = (req, res) => {
     try {
-      const { subject,firstName, lastName, id, email, password,arrMarks } = req.body; //Adress, phone ....
+
+        
+      const {teacherId, marks,title} = req.body; //Adress, phone ....
       //Validations.
       //Check if user exists
       MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         var dbo = db.db("mySchoolDB");
-        var myobj = {subject, firstName, lastName, id, email, password ,arrMarks};
-        dbo.collection("teacher").insertOne(myobj, function (err, res) {
+        var myobj = { marks,title };
+        // dbo.collection("teacher").findByIdAndUpdate(teacherId,{arrMarks[title]:{ $push(myobj)}})
+        insertOne(myobj, function (err, res) {
           if (err) throw err;
           console.log("1 document inserted");
           db.close();
@@ -27,4 +30,4 @@ class SignupTeacher {
   }
 }
 
-module.exports = new SignupTeacher();
+module.exports = new PostMark();

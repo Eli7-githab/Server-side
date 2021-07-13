@@ -8,6 +8,8 @@ const PreviousLessonsController = require("../controllers/previousLessons")
 const SignupTeacherController = require("../controllers/signupTeacher")
 const AttendanceController = require("../controllers/attendance")
 const TeachersController = require("../controllers/allTeachers")
+const StudentsController = require("../controllers/allStudent")
+const PostMarkController = require("../controllers/postMark")
 
 
 var MongoClient = require('mongodb').MongoClient;
@@ -79,9 +81,12 @@ router.get("/s_previousLessons", PreviousLessonsController.previousLessons);
 router.post("/signup", SignupController.signup);
 
 router.get("/allTeachers", TeachersController.allTeachers);
-router.post("/postLesson", PostLessonController.postLesson)
-router.post("/attendance", AttendanceController.attendance)
+router.get("/allStudents", StudentsController.allStudent);
+router.post("/postLesson", PostLessonController.postLesson);
+router.post("/attendance", AttendanceController.attendance);
+router.post("/postMark",PostMarkController.postMark);
 
-router.get("/")
 
+
+router.get("/");
 module.exports = router;
