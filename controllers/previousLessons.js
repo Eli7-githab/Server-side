@@ -27,7 +27,7 @@ class PreviousLessons {
           //  console.log(resultStudent);
             // let resultTeacher =await  dbo.collection("teacher").findone({subject:resultStudent.subject});
            // let result =await  dbo.collection("lessons").find({subject:resultStudent.subject}).toArray();
-            let result =await  dbo.collection("lessons").find().toArray();
+            let result =await dbo.collection("lessons").find().toArray();
             //console.log(result);
             db.close();
             return res.status(200).json(result);
