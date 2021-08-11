@@ -10,6 +10,7 @@ const AttendanceController = require("../controllers/attendance")
 const TeachersController = require("../controllers/allTeachers")
 const StudentsController = require("../controllers/allStudent")
 const PostMarkController = require("../controllers/postMark")
+const MailController = require("../controllers/mail")
 
 
 var MongoClient = require('mongodb').MongoClient;
@@ -85,7 +86,7 @@ router.get("/allStudents", StudentsController.allStudent);
 router.post("/postLesson", PostLessonController.postLesson);
 router.post("/attendance", AttendanceController.attendance);
 router.post("/postMark",PostMarkController.postMark);
-
+// router.post("/mail", MailController.mailSender);
 
 
 router.get("/");

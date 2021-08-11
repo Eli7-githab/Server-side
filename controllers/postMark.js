@@ -28,7 +28,7 @@ class PostMark {
         // var teacher = await dbo.collection("teacher").findById(teacherId);
         var teacher = await dbo.collection("teacher");
         console.log("teacher1----------",teacher[0]);
-        console.log("teacher3----------"+teacher);
+        console.log("teacher3----------"+toJSON(teacher) );
         let foundTitle = Object.keys((teacher.arrMarks).find(markTitle => markTitle === title))
         console.log(foundTitle);
         if (foundTitle) {
