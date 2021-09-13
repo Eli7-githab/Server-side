@@ -1,26 +1,22 @@
-var MongoClient = require('mongodb').MongoClient;
+
 const jwt = require("jsonwebtoken");
-var url = "mongodb://localhost:27017/mySchoolDB";
+const Student = require('../models/student');
 
 class Signup {
-  signup = (req, res) => {
+  signup = async (req, res) => {
     try {
-      const { subject,firstName, lastName, id, email, password } = req.body; //Adress, phone ....
+      const { subject, firstName, lastName, id, email, password } = req.body; //Adress, phone ....
       //Validations.
       //Check if user exists
-      MongoClient.connect(url, function (err, db) {
-        if (err) throw err;
-        var dbo = db.db("mySchoolDB");
-        var myobj = { subject,firstName, lastName, id, email, password };
-        dbo.collection("student").insertOne(myobj, function (err, res) {
-          if (err) throw err;
-          console.log("1 document inserted");
-          db.close();
-        });
-        // const token = generateAccessToken(user);
-        // console.log("token", token);
-        return res.send();
-      });
+
+      var myobj = new Student({ subject, firstName, lastName, id, email, password });
+      await myobj.save();
+      console.log("1 document inserted");
+
+      // const token = generateAccessToken(user);
+      // console.log("token", token);
+      return res.send();
+
     } catch (error) {
       res.status(500).send(error)
     }

@@ -1,27 +1,23 @@
-var MongoClient = require('mongodb').MongoClient;
+
 const jwt = require("jsonwebtoken");
-var url = "mongodb://localhost:27017/mySchoolDB";
+const Lessons = require('../models/lessons');
 
 
 class PostLesson {
-  postLesson = (req, res) => {
+  postLesson = async (req, res) => {
     // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
-    const { teacher,numLesson, lessonName, file, date, notes, time ,subject} = req.body; //Adress, phone ....
+    const { teacher, numLesson, lessonName, file, date, notes, time, subject } = req.body; //Adress, phone ....
     //Validations.
     //Check if user exists
-    MongoClient.connect(url, function (err, db) {
-      if (err) throw err;
-      var dbo = db.db("mySchoolDB");
-      var myobj = { teacher,numLesson, lessonName, file, date, notes, time ,subject};
-      dbo.collection("lessons").insertOne(myobj, function (err, res) {
-        if (err) throw err;
-        console.log("1 document inserted");
-        db.close();
-      });
-      // const token = generateAccessToken(user);
-      // console.log("token", token);
-      return res.send();
-    });
+    var arrHw = [];
+    var myobj = new Lessons({ teacher, numLesson, lessonName, file, date, notes, time, subject, arrHw });
+    await myobj.save();
+    console.log("1 document inserted");
+
+    // const token = generateAccessToken(user);
+    // console.log("token", token);
+    return res.send();
+
 
   }
 }

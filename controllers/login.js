@@ -1,43 +1,40 @@
-
-var MongoClient = require('mongodb').MongoClient;
 const jwt = require("jsonwebtoken");
-var url = "mongodb://localhost:27017/mySchoolDB";
+const Student = require('../models/student');
+const Teacher = require('../models/teacher');
 
 class Login {
   TOKEN_SECRET = "F9EACB0E0AB8102E999DF5E3808B215C028448E868333041026C481960EFC126";
 
   generateAccessToken = (username) => {
-    return jwt.sign({ username }, TOKEN_SECRET);
+    console.log('generateAccessToken ',username);
+    return jwt.sign({ username:username }, this.TOKEN_SECRET);
   };
 
-  login = (req, res) => {
+  login = async (req, res) => {
     try {
       res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
       const { user, password } = req.query;
       if (user == '1' && password == '1')
         return res.json({ kind: 'admin' });
-      MongoClient.connect(url, async function (err, db) {
-        if (err)
-          return res.status(500).send(err);
-        var dbo = db.db("mySchoolDB");
-        var query = { email: user, password };
-        let result
-        result = await dbo.collection("student").findOne(query)
-          if (result) {
-            return res.json({ kind: 'student', result });
-          }
+      var query = { email: user, password };
+      let result
+      result = await Student.findOne(query)
+      if (result) {
+        return res.json({ kind: 'student', result , token:this.generateAccessToken(result.email) });
+      }
 
-        result = await dbo.collection("teacher").findOne(query)
-        if (result) {
-          return res.json({ kind: 'teacher', result });
-        }
-        db.close();
-      });
-  } catch(error) {
-    // throw error
-    return res.status(500).json({error})
+      result = await Teacher.findOne(query)
+
+      if (result) {
+        return res.json({ kind: 'teacher', result, token:this.generateAccessToken(result.email) });
+      }
+
+    } catch (error) {
+      // throw error
+      console.log('error on login', error);
+      return res.status(500).json({ error })
+    }
   }
-}
 }
 // let result = await dbo.collection("student").find(query)
 // console.log("result student");

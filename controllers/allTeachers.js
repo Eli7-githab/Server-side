@@ -1,37 +1,37 @@
 
-var MongoClient = require('mongodb').MongoClient;
+// var MongoClient = require('mongodb').MongoClient;
 const jwt = require("jsonwebtoken");
-var url = "mongodb://localhost:27017/mySchoolDB";
+// var url = "mongodb://localhost:27017/mySchoolDB";
+const Teacher = require('../models/teacher');
 
 class AllTeachers {
-    TOKEN_SECRET = "F9EACB0E0AB8102E999DF5E3808B215C028448E868333041026C481960EFC126";
+  TOKEN_SECRET = "F9EACB0E0AB8102E999DF5E3808B215C028448E868333041026C481960EFC126";
 
-    generateAccessToken = (username) => {
-        return jwt.sign({ username }, TOKEN_SECRET);
-    };
+  generateAccessToken = (username) => {
+    return jwt.sign({ username }, TOKEN_SECRET);
+  };
 
-    allTeachers = (req, res) => {
-        res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
-        MongoClient.connect(url, async function (err, db) {
-            if (err)
-                return res.status(500).send(err);
-            var dbo = db.db("mySchoolDB");
-            try{
-        
+  allTeachers = async (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
+    // MongoClient.connect(url, async function (err, db) {
+    //     if (err)
+    //         return res.status(500).send(err);
+    //     var dbo = db.db("mySchoolDB");
+    try {
 
-         //   let resultTeacher =await  dbo.collection("teacher").find({teacher:resultTeacher.subject}).toArray();
-          let resultTeacher =await  dbo.collection("teacher").find().toArray();
-          db.close();
-            return res.status(200).json(resultTeacher.map(teacher=>teacher.subject));
-            }catch(error){
-          return  res.status(500).json({error:error})
-        }
-        });
-        
 
-        }
-        }
-    
-    
+      //   let resultTeacher =await  dbo.collection("teacher").find({teacher:resultTeacher.subject}).toArray();
+      let resultTeacher = await Teacher.find().select('subject');
+      //   db.close();
+      // return res.status(200).json(resultTeacher.map(teacher => teacher.subject));
+       return res.status(200).json(resultTeacher);
+    } catch (error) {
+      return res.status(500).json({ error: error })
+    }
+    // });
+  }
+}
+
+
 module.exports = new AllTeachers();
 
