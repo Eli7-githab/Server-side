@@ -2,7 +2,7 @@
 const jwt = require("jsonwebtoken");
 // var url = "mongodb://localhost:27017/mySchoolDB";
 
-const Lessons = require('../models/test');
+const Lessons = require('../models/lessons');
 
 
 class AllLessons {
@@ -14,9 +14,9 @@ class AllLessons {
 
     allLessons = async (req, res) => {
         res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
-
+        const subject = req.query;
         try {
-            let resultTeacher = await Lessons.find();
+            let resultTeacher = await Lessons.find(subject);
             return res.status(200).json(resultTeacher);
         } catch (error) {
 

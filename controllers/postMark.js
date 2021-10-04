@@ -8,21 +8,8 @@ class PostMark {
   postMark = async(req, res) => {
     try {
       const { teacherId, marks, lessonId } = req.body;
-      // lessonName =lessonId.name;
       //Validations.
       //Check if user exists
-
-        // var myobj = { title, marks };
-
-        // postMark(teacherId, marks:{ "test": [aredf: 90, 35fgd: 100] })
-        // find by id teacher
-        // Marks -> find by title
-        // Teacher.marks).find(markTitle=> markTitle === title))object.keys
-        // Found: push
-        // Not found: new key
-
-        // var teacher= dbo.collection("teacher").findById(teacherId,{arrMarks[title]:{ $push(myobj)}})
-
         // ---------
         // להגיד לו לאיזה שדא להכניס ז"א לתוך arrHw??? או שזה כבר מכניס לתוך משהו???
         // --------
@@ -47,14 +34,27 @@ class PostMark {
       res.status(500).send(error)
     }
   }
+  postFile = async (req, res) => {
+    try {
+        const {lessonId, studentId, file } = req.body;
+        //Validations.
+        //Check if  exists
+        const obj = {studentId, file}
+        // Lessons.findByOneAndUpdate({_id:ObjectId(lessonId),"arrHw.studentId":ObjectId(studentId) }, {
+          Lessons.findByOneAndUpdate({_id:ObjectId(lessonId)}, {
+            $push: { arrHw: obj }
+            //  ,function(err, res) {
+            //     if (err) throw err;
+            //     console.log("the file inserted");
+            //     // const token = generateAccessToken(user);
+            //     // console.log("token", token);
+            //     return res.send();
+            // }
+          }    
+        );
+    } catch (error) {
+        res.status(500).send(error)
+    }
 }
-
+}
 module.exports = new PostMark();
-
-// arrMarks.less==
-// {arrMarks:[{les1:
-//   [{studentId:'',mark:122}]
-// }]
-// }
-
-// mongodb.update

@@ -1,19 +1,20 @@
 const mongoose = require('mongoose');
-const Schema=mongoose.Schema
+const Schema = mongoose.Schema
 
 const testSchema = new Schema({
+
     teacher: String,
-    nameSubject: String,
+    nameSubject: { type: String, required: true },
     date: Date,
     file: String,
-    title: String,
+    comment: String,
     subject: String,
     marks: [
         {
-            studentId: {type:Schema.Types.ObjectId, ref:'student'},
+            studentId: { type: Schema.Types.ObjectId, ref: 'student' },
             mark: Number
         }
     ]
 })
 
-module.exports=mongoose.model('test',testSchema)
+module.exports = mongoose.model('test', testSchema)

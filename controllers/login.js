@@ -6,8 +6,8 @@ class Login {
   TOKEN_SECRET = "F9EACB0E0AB8102E999DF5E3808B215C028448E868333041026C481960EFC126";
 
   generateAccessToken = (username) => {
-    console.log('generateAccessToken ',username);
-    return jwt.sign({ username:username }, this.TOKEN_SECRET);
+    console.log('generateAccessToken ', username);
+    // return jwt.sign({ username:username }, this.TOKEN_SECRET);
   };
 
   login = async (req, res) => {
@@ -20,13 +20,15 @@ class Login {
       let result
       result = await Student.findOne(query)
       if (result) {
-        return res.json({ kind: 'student', result , token:this.generateAccessToken(result.email) });
+        // return res.json({ kind: 'student', result , token:this.generateAccessToken(result.email) });
+        return res.json({ kind: 'student', result });
       }
 
       result = await Teacher.findOne(query)
 
       if (result) {
-        return res.json({ kind: 'teacher', result, token:this.generateAccessToken(result.email) });
+        // return res.json({ kind: 'teacher', result, token:this.generateAccessToken(result.email) });
+        return res.json({ kind: 'teacher', result });
       }
 
     } catch (error) {

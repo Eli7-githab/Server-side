@@ -30,24 +30,24 @@ const TOKEN_SECRET =
 const generateAccessToken = (username) => {
   return jwt.sign({ username: username }, TOKEN_SECRET);
 };
-const checkUserMiddlware = async (req, res, next) => {
-  try {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
-    console.log('on middlware');
-    let cookie = req.cookies
-    let user = jwt.verify(cookie.jwt, TOKEN_SECRET)
-    // var query = { email: user.userName };
-    // let result = await Student.findOne(query)
-    // if(result)
-    return next()
-    // else
-    // return res.status(403).send('forbiden')
+// const checkUserMiddlware = async (req, res, next) => {
+//   try {
+//     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
+//     console.log('on middlware');
+//     let cookie = req.cookies
+//     let user = jwt.verify(cookie.jwt, TOKEN_SECRET)
+//     // var query = { email: user.userName };
+//     // let result = await Student.findOne(query)
+//     // if(result)
+//     return next()
+//     // else
+//     // return res.status(403).send('forbiden')
 
-  } catch (err) {
-    console.log('error', err);
-    return res.status(403).json({ message: 'forbiden' })
-  }
-}
+//   } catch (err) {
+//     console.log('error', err);
+//     return res.status(403).json({ message: 'forbiden' })
+//   }
+// }
 
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/mySchoolDB";
@@ -100,20 +100,24 @@ router.get("/login", LoginController.login);
 // router.get("/s_previousLessons/:id", PreviousLessonsController.previousLessons);
 router.get("/s_previousLessons/:subject", PreviousLessonsController.previousLessons);
 router.post("/signup", SignupController.signup);
-router.get("/allTeachers", checkUserMiddlware, TeachersController.allTeachers);
+// router.get("/allTeachers", checkUserMiddlware, TeachersController.allTeachers);
+router.get("/allTeachers", TeachersController.allTeachers);
 router.get("/allHw", GetAllHwController.allHw);
 router.get("/allLessons", GetAllLessonsController.allLessons);
 router.get("/allAttendance", GetAllAttendanceController.allAttendance);
 router.get("/allMarks", GetAllMarksController.allMarks);
-router.get("/allStudents", checkUserMiddlware, StudentsController.allStudent);
+// router.get("/allStudents", checkUserMiddlware, StudentsController.allStudent);
+router.get("/allStudents", StudentsController.allStudent);
 router.get("/viewTest", GetTestsController.getTests);
 router.get("/allTests", GetTestsController2.allTests);
+router.get("/myTests", GetTestsController2.myTests);
 router.post("/postLesson", PostLessonController.postLesson);
 router.post("/postHw", PostHwController.postHw);
 router.post("/attendance", AttendanceController.attendance);
 router.post("/postMark", PostMarkController.postMark);
 router.post("/postMarkTest", PostMarkTestController.postMarkTest);
 router.post("/postTest", PostTestController.postTest);
+router.post("/postFile", PostMarkController.postFile);
 // router.post("/mail", MailController.mailSender);
 
 module.exports = router;

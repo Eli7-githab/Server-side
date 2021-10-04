@@ -3,18 +3,19 @@ const Schema = mongoose.Schema
 
 const lessonsSchema = new Schema({
 
-    teacher: String,
-    numLesson: Number,
-    lessonName: String,
+    teacher: { type: String, required: true },
+    numLesson: { type: Number, required: true },
+    lessonName: { type: String, required: true },
     file: String,
-    date: Date,
+    date: { type: Date, required: true },
     notes: String,
     time: String,
     subject: String,
     arrHw: [
         {
             studentId: { type: Schema.Types.ObjectId, ref: 'student' },
-            mark: Number
+            mark: Number,
+            file: String,
         }
     ],
     hwQuestions: [
