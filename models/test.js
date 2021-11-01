@@ -12,6 +12,7 @@ const testSchema = new Schema({
     marks: [
         {
             studentId: { type: Schema.Types.ObjectId, ref: 'student' },
+            file: String,
             mark: Number
         }
     ]

@@ -7,7 +7,7 @@ class Login {
 
   generateAccessToken = (username) => {
     console.log('generateAccessToken ', username);
-    // return jwt.sign({ username:username }, this.TOKEN_SECRET);
+    return jwt.sign({ username: username }, this.TOKEN_SECRET);
   };
 
   login = async (req, res) => {
@@ -20,15 +20,15 @@ class Login {
       let result
       result = await Student.findOne(query)
       if (result) {
-        // return res.json({ kind: 'student', result , token:this.generateAccessToken(result.email) });
-        return res.json({ kind: 'student', result });
+         return res.json({ kind: 'student', result , token:this.generateAccessToken(result.email) });
+        // return res.json({ kind: 'student', result });
       }
 
       result = await Teacher.findOne(query)
 
       if (result) {
-        // return res.json({ kind: 'teacher', result, token:this.generateAccessToken(result.email) });
-        return res.json({ kind: 'teacher', result });
+         return res.json({ kind: 'teacher', result, token:this.generateAccessToken(result.email) });
+        // return res.json({ kind: 'teacher', result });
       }
 
     } catch (error) {

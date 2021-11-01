@@ -15,10 +15,11 @@ class AllHw {
         const {subject} = req.query
             try {
                 
-                let resultHw = await Lessons.find({subject:subject})
+                // let resultHw = await Lessons.find({subject:subject})
+                // let resultHw = await Lessons.find({subject:subject},select:{field:1})
+                 let resultHw = await Lessons.find({subject:subject}).populate({path:"arrHw.studentId"})
                 return res.status(200).json(resultHw);
             } catch (error) {
-
                 return res.status(500).json({ error: error })
             }
     }

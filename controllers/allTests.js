@@ -19,7 +19,7 @@ class AllTests {
         //         return res.status(500).send(err);
         //     var dbo = db.db("mySchoolDB");
         try {
-            let resultTest = await Test.find(subject);
+            let resultTest = await Test.find(subject).populate({path:"marks.studentId"});
             // db.close();
             return res.status(200).json(resultTest);
         } catch (error) {

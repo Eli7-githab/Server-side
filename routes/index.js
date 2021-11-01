@@ -20,6 +20,7 @@ const GetAllMarksController = require("../controllers/allMarks")
 const GetAllHwController = require("../controllers/allHw")
 const GetAllLessonsController = require("../controllers/allLessons")
 const MailController = require("../controllers/mail")
+const ForgetPassword = require("../controllers/forgetPassword")
 
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/mySchoolDB";
@@ -66,9 +67,6 @@ router.get('/mySchoolDB', (req, res) => {
     res.send();
   });
 })
-
-
-
 router.get("/createStudentColection", (req, res) => {
   MongoClient.connect(url, function (err, db) {
     if (err) return res.status(500).send(err);
@@ -81,7 +79,6 @@ router.get("/createStudentColection", (req, res) => {
     });
   });
 })
-
 router.get("/createTeacherColection", (req, res) => {
   MongoClient.connect(url, function (err, db) {
     if (err) return res.status(500).send(err);
@@ -118,6 +115,7 @@ router.post("/postMark", PostMarkController.postMark);
 router.post("/postMarkTest", PostMarkTestController.postMarkTest);
 router.post("/postTest", PostTestController.postTest);
 router.post("/postFile", PostMarkController.postFile);
+router.post("/forgetPassword", ForgetPassword.forgetPassword);
 // router.post("/mail", MailController.mailSender);
 
 module.exports = router;

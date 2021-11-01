@@ -11,7 +11,7 @@ class PreviousLessons {
   previousLessons = async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
     //  const { id } = req.query;
-
+    // const subject = req.query;
     try {
       const { subject } = req.params
       let result = await Lessons.find({ subject: subject });

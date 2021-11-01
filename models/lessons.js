@@ -7,7 +7,7 @@ const lessonsSchema = new Schema({
     numLesson: { type: Number, required: true },
     lessonName: { type: String, required: true },
     file: String,
-    date: { type: Date, required: true },
+    date:   Date,
     notes: String,
     time: String,
     subject: String,
